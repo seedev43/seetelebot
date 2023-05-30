@@ -22,11 +22,10 @@ readCommands();
 //   return next();
 // });
 
-/*bot.on("callback_query", async (message) => {
-    const m = await serialize(bot, message);
-  await Message(bot, m);
-})
-*/
+// bot.on("callback_query", async (update) => {
+//   console.log(update);
+// });
+
 bot.on(["message", "callback_query"], async (message) => {
   const m = await serialize(bot, message);
   await Message(bot, m);

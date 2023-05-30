@@ -18,6 +18,7 @@ const Message = async (ctx, m) => {
     if (!m) return;
     if (m.isBot) return;
 
+    console.log(m);
     const prefix = (m.prefix =
       /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@\/#%^&.©^😁🥴😶]/gi.test(m.body)
         ? m.body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@\/#%^&.©^😁🥴😶]/gi)[0]
@@ -42,7 +43,7 @@ const Message = async (ctx, m) => {
         ) +
           "\n" +
           chalk.black(chalk.bgWhite("- MESSAGE")),
-        chalk.black(chalk.bgGreen(m.body || m.type))
+        chalk.black(chalk.bgGreen(m.body))
       );
     }
 
@@ -52,7 +53,7 @@ const Message = async (ctx, m) => {
       }
 
       if (command.default.isOwner && !m.isOwner) {
-        return ctx.api.sendMessage(m.fromid, "Command hanya untuk owner bot");
+        return ctx.api.sendMessage(m.chatid, "Command hanya untuk owner bot");
       }
     }
 

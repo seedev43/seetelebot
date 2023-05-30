@@ -21,9 +21,11 @@ const serialize = async (ctx, m) => {
     m.text = m?.args?.join(" ");
     m.date = m.message.date;
     m.isOwner = [...global.set.owner].includes(Number(m.fromid));
-    if(m.message.reply_to_message) {
-      let replymsg = m.message.reply_to_message 
-      m.fileid = replymsg?.photo ? replymsg.photo[replymsg.photo.length - 1].file_id : ""
+    if (m.message.reply_to_message) {
+      let replymsg = m.message.reply_to_message;
+      m.fileid = replymsg?.photo
+        ? replymsg.photo[replymsg.photo.length - 1].file_id
+        : replymsg[Object.keys(replymsg)[4]].file_id;
     }
 
     m.reply = (text, options = {}) => {
@@ -33,16 +35,12 @@ const serialize = async (ctx, m) => {
       });
     };
   }
-  if(m.update.callback_query) {
-      let cb = m.update.callback_query
-      m.cbid = cb.id
-      m.cbdata = cb.data
-      m.msgid = cb.message.message_id
-      if(m.cbdata == "btn") {
-          ctx.api.sendMessage(cb.message.chat.id, "button terklik ygy")
-      }
+  if (m.update.callback_query) {
+    let cb = (m.cb = m.update.callback_query);
+    m.cbid = cb.id;
+    m.cbdata = cb.data;
+    m.msgid = cb.message.message_id;
   }
-  console.log(m)
   return m;
 };
 
@@ -54,4 +52,3 @@ fs.watchFile(fileP, () => {
   console.log(`Update File "${fileP}"`);
   import(`${import.meta.url}?update=${Date.now()}`);
 });
-
