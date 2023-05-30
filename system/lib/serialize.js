@@ -1,3 +1,8 @@
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import fs from "node:fs";
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 const serialize = async (ctx, m) => {
   if (!m) return;
   if (m.message) {
@@ -9,7 +14,6 @@ const serialize = async (ctx, m) => {
       m.message.from.last_name !== undefined ? m.message.from.last_name : "";
     m.name = m.fname + " " + m.lname;
     m.isBot = m.message.from?.is_bot;
-    m.type = Object.keys(m.message);
     m.isGroup = m.message.chat.type !== "private" ? true : false;
     m.body = m.message.text;
     m.arg = m?.body?.trim()?.split(/ +/) || [];
@@ -17,6 +21,10 @@ const serialize = async (ctx, m) => {
     m.text = m?.args?.join(" ");
     m.date = m.message.date;
     m.isOwner = [...global.set.owner].includes(Number(m.fromid));
+    if(m.message.reply_to_message) {
+      let replymsg = m.message.reply_to_message 
+      m.fileid = replymsg?.photo ? replymsg.photo[replymsg.photo.length - 1].file_id : ""
+    }
 
     m.reply = (text, options = {}) => {
       return ctx.api.sendMessage(m.chatid, text, {
@@ -25,8 +33,25 @@ const serialize = async (ctx, m) => {
       });
     };
   }
-  console.log(m);
+  if(m.update.callback_query) {
+      let cb = m.update.callback_query
+      m.cbid = cb.id
+      m.cbdata = cb.data
+      m.msgid = cb.message.message_id
+      if(m.cbdata == "btn") {
+          ctx.api.sendMessage(cb.message.chat.id, "button terklik ygy")
+      }
+  }
+  console.log(m)
   return m;
 };
 
 export { serialize };
+
+let fileP = fileURLToPath(import.meta.url);
+fs.watchFile(fileP, () => {
+  fs.unwatchFile(fileP);
+  console.log(`Update File "${fileP}"`);
+  import(`${import.meta.url}?update=${Date.now()}`);
+});
+

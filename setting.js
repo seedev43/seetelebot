@@ -1,8 +1,13 @@
 import func from "./system/lib/func.js";
+import grammy from "grammy";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 
 global.reloadFile = (file) => reloadFile(file);
+
+global.npm = {
+  grammy: grammy
+}
 
 global.set = {
   owner: [466284462],
