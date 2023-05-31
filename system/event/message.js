@@ -6,7 +6,6 @@ import { format } from "node:util";
 import chalk from "chalk";
 import Collection from "../lib/collection.js";
 import { fileURLToPath } from "node:url";
-import { answerCallbackQuery } from "./answerCallbackQuery.js";
 
 global.tags = [];
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -62,7 +61,6 @@ const Message = async (ctx, m, update) => {
         .run({
           ctx,
           m,
-          cb: answerCallbackQuery(ctx, update),
         })
         ?.then((a) => a)
         ?.catch((error) => console.log(error));
@@ -74,7 +72,6 @@ const Message = async (ctx, m, update) => {
         .run({
           ctx,
           m,
-          cb: answerCallbackQuery(ctx, update),
         })
         ?.then((a) => a)
         ?.catch((error) => console.log(error));
