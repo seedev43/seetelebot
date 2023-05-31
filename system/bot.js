@@ -26,8 +26,9 @@ readCommands();
 //   console.log(update);
 // });
 
-bot.on(["message", "callback_query"], async (message) => {
-  const m = await serialize(bot, message);
+bot.on(["callback_query", "message"], async (update) => {
+  // console.log("DARI FILE BOT:", message);
+  const m = await serialize(bot, update);
   await Message(bot, m);
 });
 

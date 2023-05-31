@@ -1,5 +1,6 @@
 import "../../setting.js";
 
+import { answerCallbackQuery } from "./answerCallbackQuery.js";
 import fs from "node:fs";
 import path from "node:path";
 import { format } from "node:util";
@@ -18,7 +19,8 @@ const Message = async (ctx, m) => {
     if (!m) return;
     if (m.isBot) return;
 
-    console.log(m);
+    // console.log(m);
+
     const prefix = (m.prefix =
       /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@\/#%^&.©^😁🥴😶]/gi.test(m.body)
         ? m.body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@\/#%^&.©^😁🥴😶]/gi)[0]
@@ -62,6 +64,7 @@ const Message = async (ctx, m) => {
         .run({
           ctx,
           m,
+          cb: answerCallbackQuery(ctx, m),
         })
         ?.then((a) => a)
         ?.catch((error) => console.log(error));
@@ -73,6 +76,7 @@ const Message = async (ctx, m) => {
         .run({
           ctx,
           m,
+          cb: answerCallbackQuery(ctx, m),
         })
         ?.then((a) => a)
         ?.catch((error) => console.log(error));

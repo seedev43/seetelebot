@@ -3,7 +3,7 @@ export default {
   cmd: ["button"],
   tags: "main",
   desc: "buat button",
-  run: async ({ ctx, m }) => {
+  run: async ({ ctx, m, cb }) => {
     let arr = {
       inline_keyboard: [
         [
@@ -13,13 +13,17 @@ export default {
         [{ text: "Callback button", callback_data: "/oke" }],
       ],
     };
-    
-    let ini = m.reply("buat button", {
-      reply_markup: arr,
-    });
-    
-    if(m?.cb) {
-      console.log("ini konsol dari respon button")
-    }
+
+    return m
+      .reply("buat button", {
+        reply_markup: arr,
+      })
+      .then((a) => {
+        if (cb) {
+          cb;
+          // console.log(a);
+        }
+      })
+      .catch((e) => console.log(e));
   },
 };
