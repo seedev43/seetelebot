@@ -64,6 +64,7 @@ const Message = async (ctx, m) => {
         .run({
           ctx,
           m,
+          cb: answerCallbackQuery(ctx, m),
         })
         ?.then((a) => a)
         ?.catch((error) => console.log(error));
@@ -75,6 +76,7 @@ const Message = async (ctx, m) => {
         .run({
           ctx,
           m,
+          cb: answerCallbackQuery(ctx, m),
         })
         ?.then((a) => a)
         ?.catch((error) => console.log(error));

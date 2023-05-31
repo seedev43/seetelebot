@@ -28,7 +28,7 @@ const serialize = async (ctx, m) => {
       m.isGroup = m.updatemsg.chat.type !== "private" ? true : false;
 
       if (m.updatemsg.reply_to_message) {
-        let replymsg = (m.replymsg = m.updatemsg.reply_to_message);
+        let replymsg = m.updatemsg.reply_to_message;
         m.fileid = replymsg?.photo
           ? replymsg.photo[replymsg.photo.length - 1].file_id
           : replymsg[Object.keys(replymsg)[4]].file_id;
