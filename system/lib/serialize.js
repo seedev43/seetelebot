@@ -15,32 +15,36 @@ const serialize = async (ctx, m) => {
     m.name = m.fname + " " + m.lname;
     m.isBot = m.message.from?.is_bot;
     m.isGroup = m.message.chat.type !== "private" ? true : false;
-    m.body = m.message.text;
-    m.arg = m?.body?.trim()?.split(/ +/) || [];
-    m.args = m?.body?.trim()?.split(/ +/)?.slice(1) || [];
-    m.text = m?.args?.join(" ");
-    m.date = m.message.date;
-    m.isOwner = [...global.set.owner].includes(Number(m.fromid));
+    
     if (m.message.reply_to_message) {
       let replymsg = m.message.reply_to_message;
       m.fileid = replymsg?.photo
         ? replymsg.photo[replymsg.photo.length - 1].file_id
         : replymsg[Object.keys(replymsg)[4]].file_id;
     }
-
+    
+    m.body = m.message.text;
+    m.arg = m?.body?.trim()?.split(/ +/) || [];
+    m.args = m?.body?.trim()?.split(/ +/)?.slice(1) || [];
+    m.text = m?.args?.join(" ");
+    m.date = m.message.date;
+    m.isOwner = [...global.set.owner].includes(Number(m.fromid));
+  
+  } 
+  if (m.update.callback_query) {
+    let cb = (m.cb = m.update.callback_query);
+    m.cbid = cb.id;
+    m.cbdata = cb.data;
+    m.msgid = cb.message.message_id;
+  } 
     m.reply = (text, options = {}) => {
       return ctx.api.sendMessage(m.chatid, text, {
         reply_to_message_id: m.msgid,
         ...options,
       });
     };
-  }
-  if (m.update.callback_query) {
-    let cb = (m.cb = m.update.callback_query);
-    m.cbid = cb.id;
-    m.cbdata = cb.data;
-    m.msgid = cb.message.message_id;
-  }
+  
+  console.log(m)
   return m;
 };
 
