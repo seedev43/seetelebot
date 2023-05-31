@@ -9,6 +9,7 @@ dotenv.config();
 
 import { serialize } from "./lib/serialize.js";
 import { Message, readCommands } from "./event/message.js";
+import { answerCallbackQuery } from "./event/answerCallbackQuery.js";
 
 const { botToken, domain } = process.env;
 
@@ -22,14 +23,14 @@ readCommands();
 //   return next();
 // });
 
-// bot.on("callback_query", async (update) => {
-//   console.log(update);
-// });
+bot.on("callback_query", async (update) => {
+  await answerCallbackQuery(bot, update);
+});
 
-bot.on(["callback_query", "message"], async (update) => {
-  // console.log("DARI FILE BOT:", message);
+bot.on("message", async (update) => {
+  // console.log("DARI FILE BOT:", update);
   const m = await serialize(bot, update);
-  await Message(bot, m);
+  await Message(bot, m, update);
 });
 
 bot.start();

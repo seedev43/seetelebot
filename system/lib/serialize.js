@@ -3,18 +3,20 @@ import { fileURLToPath } from "node:url";
 import fs from "node:fs";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const serialize = async (ctx, m) => {
+export const serialize = async (ctx, m) => {
   if (!m) return;
+
+  // if (m.update?.callback_query) {
+  //   let cb = m.update.callback_query;
+  //   m.cb = await serialize(ctx, cb);
+  //   m.cbid = cb.id;
+  //   m.cbdata = cb.data;
+  //   m.msgid = cb.message.message_id;
+  //   return m;
+  // }
   if (m.update) {
-    if (m.update.callback_query) {
-   		let cb = m.update.callback_query;
-  		m.cb = await serialize(ctx, cb);
-   		m.cbid = cb.id;
-   		m.cbdata = cb.data;
-   		m.msgid = cb.message.message_id;
- 	}
     if (m.update.message) {
-      let updateMsg = (m.updatemsg = m.update.message);
+      m.updatemsg = m.update.message;
       m.msgid = m.updatemsg.message_id;
       m.fromid = m.updatemsg.from.id;
       m.chatid = m.updatemsg.chat.id;
@@ -51,12 +53,10 @@ const serialize = async (ctx, m) => {
     });
   };
 
-  console.log(m);
+  // console.log(m);
 
   return m;
 };
-
-export { serialize };
 
 let fileP = fileURLToPath(import.meta.url);
 fs.watchFile(fileP, () => {

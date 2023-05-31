@@ -14,16 +14,8 @@ export default {
       ],
     };
 
-    return m
-      .reply("buat button", {
-        reply_markup: arr,
-      })
-      .then((a) => {
-        if (cb) {
-          cb;
-          // console.log(a);
-        }
-      })
-      .catch((e) => console.log(e));
+    ctx.api.sendMessage(m.chatid, "Ini button", {
+      reply_markup: arr,
+    });
   },
 };

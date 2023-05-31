@@ -1,25 +1,23 @@
 import "../../setting.js";
 
-import { answerCallbackQuery } from "./answerCallbackQuery.js";
 import fs from "node:fs";
 import path from "node:path";
 import { format } from "node:util";
 import chalk from "chalk";
 import Collection from "../lib/collection.js";
 import { fileURLToPath } from "node:url";
+import { answerCallbackQuery } from "./answerCallbackQuery.js";
 
 global.tags = [];
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const commands = new Collection();
 const aliases = new Collection();
 
-const Message = async (ctx, m) => {
+const Message = async (ctx, m, update) => {
   try {
     if (!global.set.opt.public && !m.isOwner) return;
     if (!m) return;
     if (m.isBot) return;
-
-    // console.log(m);
 
     const prefix = (m.prefix =
       /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@\/#%^&.©^😁🥴😶]/gi.test(m.body)
@@ -64,6 +62,7 @@ const Message = async (ctx, m) => {
         .run({
           ctx,
           m,
+          cb: answerCallbackQuery(ctx, update),
         })
         ?.then((a) => a)
         ?.catch((error) => console.log(error));
@@ -75,6 +74,7 @@ const Message = async (ctx, m) => {
         .run({
           ctx,
           m,
+          cb: answerCallbackQuery(ctx, update),
         })
         ?.then((a) => a)
         ?.catch((error) => console.log(error));
