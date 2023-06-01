@@ -1,7 +1,20 @@
-import { dirname, join } from "node:path";
+import { Bot as _Bot } from "grammy";
+import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import fs from "node:fs";
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+export class Bot extends _Bot {
+  constructor(...args) {
+    super(...args);
+  }
+
+  async getFileLink(file_id) {
+    let getFile = await this.api.getFile(file_id);
+    getFile.link = `https://api.telegram.org/file/bot${this.token}/${getFile.file_path}`;
+    return getFile;
+  }
+}
 
 export const serialize = async (ctx, m) => {
   if (!m) return;
