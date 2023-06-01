@@ -24,6 +24,7 @@ export const serialize = async (ctx, m) => {
       m.msgid = m.updatemsg.message_id;
       m.fromid = m.updatemsg.from.id;
       m.chatid = m.updatemsg.chat.id;
+      m.date = m.updatemsg.date;
       m.fname = m.updatemsg.from.first_name;
       m.lname =
         m.updatemsg.from.last_name !== undefined
@@ -37,18 +38,16 @@ export const serialize = async (ctx, m) => {
         let replymsg = (m.replymsg = m.updatemsg.reply_to_message);
         m.fileid = replymsg?.photo
           ? replymsg.photo[replymsg.photo.length - 1].file_id
-          : replymsg[Object.keys(replymsg)[4]].file_id;
+          : replymsg[Object.keys(replymsg)[4]].file_id || "";
       }
 
-      m.body = m.updatemsg.text;
+      m.type = Object.keys(m.updatemsg)[4];
+      m.body = m.updatemsg.caption || m.updatemsg.text || "";
       m.arg = m?.body?.trim()?.split(/ +/) || [];
       m.args = m?.body?.trim()?.split(/ +/)?.slice(1) || [];
       m.text = m?.args?.join(" ");
-      m.date = m.updatemsg.date;
-      m.sender = m.replymsg?.from.id || m.fromid
-      m.isOwner = m.sender && [...set.owner].indexOf(m.sender) !== -1 ? true : false
-      //m.isOwner = [...set.owner].includes(m.fromid)
-      console.log(m)
+      m.sender = m.fromid;
+      m.isOwner = m.sender && [...set.owner].includes(m.sender);
     }
     // console.log(m);
   }

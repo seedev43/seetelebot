@@ -1,20 +1,23 @@
 import "../../setting.js";
-
 import fs from "node:fs";
 import path from "node:path";
-import { format } from "node:util";
+import { createRequire } from "node:module";
 import chalk from "chalk";
 import Collection from "../lib/collection.js";
 import { fileURLToPath } from "node:url";
+const require = createRequire(import.meta.url);
 
 global.tags = [];
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const commands = new Collection();
 const aliases = new Collection();
 
-const Message = async (ctx, m, update) => {
+const Message = async (ctx, m) => {
   try {
-    if (!global.set.opt.public && !m.isOwner) return;
+    // const filePath = path.join(__dirname, "../../", "db.json");
+    // let getDB = JSON.parse(fs.readFileSync(filePath));
+    let getDB = require("../../db.json");
+    if (!getDB.data.settings.public && !m.isOwner) return;
     if (!m) return;
     if (m.isBot) return;
 
@@ -42,7 +45,7 @@ const Message = async (ctx, m, update) => {
         ) +
           "\n" +
           chalk.black(chalk.bgWhite("- MESSAGE")),
-        chalk.black(chalk.bgGreen(m.body))
+        chalk.black(chalk.bgGreen(m.body || m.type))
       );
     }
 

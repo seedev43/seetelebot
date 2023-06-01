@@ -16,8 +16,10 @@
     "axios": "^1.4.0",
     "chalk": "^5.2.0",
     "dotenv": "^16.0.3",
+    "esm": "^3.2.25",
     "express": "^4.18.2",
     "file-type": "^18.4.0",
-    "grammy": "^1.16.1"
+    "grammy": "^1.16.1",
+    "moment-timezone": "^0.5.43"
   }
 }
