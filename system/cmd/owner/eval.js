@@ -24,6 +24,6 @@ export default {
       ?.then((res) => m.reply(util.format(res)))
       ?.catch((err) => m.reply(util.format(err)));
   },
-  isOwner: true,
+  //isOwner: true,
   noPrefix: true,
 };

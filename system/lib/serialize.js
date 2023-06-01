@@ -18,15 +18,6 @@ export class Bot extends _Bot {
 
 export const serialize = async (ctx, m) => {
   if (!m) return;
-
-  // if (m.update?.callback_query) {
-  //   let cb = m.update.callback_query;
-  //   m.cb = await serialize(ctx, cb);
-  //   m.cbid = cb.id;
-  //   m.cbdata = cb.data;
-  //   m.msgid = cb.message.message_id;
-  //   return m;
-  // }
   if (m.update) {
     if (m.update.message) {
       m.updatemsg = m.update.message;
@@ -54,14 +45,17 @@ export const serialize = async (ctx, m) => {
       m.args = m?.body?.trim()?.split(/ +/)?.slice(1) || [];
       m.text = m?.args?.join(" ");
       m.date = m.updatemsg.date;
-      m.isOwner = [...global.set.owner].includes(Number(m.fromid));
+      m.sender = m.replymsg?.from.id || m.fromid
+      m.isOwner = m.sender && [...set.owner].indexOf(m.sender) !== -1 ? true : false
+      //m.isOwner = [...set.owner].includes(m.fromid)
+      console.log(m)
     }
     // console.log(m);
   }
 
   m.reply = (text, options = {}) => {
     return ctx.api.sendMessage(m.chatid, text, {
-      reply_to_message_id: m.msgid,
+      reply_to_message_id: m?.msgid,
       ...options,
     });
   };
