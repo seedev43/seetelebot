@@ -3,7 +3,7 @@
     "users": {},
     "groups": {},
     "settings": {
-      "public": false
+      "public": true
     }
   }
 }

@@ -22,7 +22,7 @@ process.on("uncaughtException", console.error);
 process.on("unhandledRejection", console.error);
 readCommands();
 
-global.set.func.readJSONFile("db.json");
+global.set.func.readJSONFile("config.json");
 
 bot.on("callback_query", async (update) => {
   await answerCallbackQuery(bot, update);
@@ -33,11 +33,10 @@ bot.on("message", async (update) => {
   await Message(bot, m, update);
 });
 
-setInterval(async () => {
-  if (global.db) await database.write(global.db);
-}, 3000);
 
-bot.start();
+bot.start({
+  drop_pending_updates: true
+});
 
 //untuk method webhook
 // app.use(`/${botToken}`, webhookCallback(bot, "express"));

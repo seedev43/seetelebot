@@ -16,8 +16,8 @@ const Message = async (ctx, m) => {
   try {
     // const filePath = path.join(__dirname, "../../", "db.json");
     // let getDB = JSON.parse(fs.readFileSync(filePath));
-    let getDB = require("../../db.json");
-    if (!getDB.data.settings.public && !m.isOwner) return;
+    let getDB = require("../../config.json");
+    if (!getDB.settings.public && !m.isOwner) return;
     if (!m) return;
     if (m.isBot) return;
 
@@ -55,7 +55,7 @@ const Message = async (ctx, m) => {
       }
 
       if (command.default.isOwner && !m.isOwner) {
-        return ctx.api.sendMessage(m.chatid, "Command hanya untuk owner bot");
+        return m.reply("Command hanya untuk owner bot");
       }
     }
 
