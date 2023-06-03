@@ -12,7 +12,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const commands = new Collection();
 const aliases = new Collection();
 
-const Message = async (ctx, m) => {
+const Message = async (ctx, m, db) => {
   try {
     // const filePath = path.join(__dirname, "../../", "db.json");
     // let getDB = JSON.parse(fs.readFileSync(filePath));
@@ -64,6 +64,7 @@ const Message = async (ctx, m) => {
         .run({
           ctx,
           m,
+          db,
         })
         ?.then((a) => a)
         ?.catch((error) => console.log(error));
@@ -75,6 +76,7 @@ const Message = async (ctx, m) => {
         .run({
           ctx,
           m,
+          db,
         })
         ?.then((a) => a)
         ?.catch((error) => console.log(error));

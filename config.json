@@ -1,6 +1,8 @@
 {
   "settings": {
-    "owner": ["4662"],
+    "owner": [
+      "4662"
+    ],
     "public": false,
     "groups": false
   }
