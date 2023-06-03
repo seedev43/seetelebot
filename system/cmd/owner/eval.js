@@ -5,7 +5,7 @@ export default {
   cmd: ["eval", ">>"],
   tags: "owner",
   desc: "Eval",
-  run: async ({ ctx, m, db }) => {
+  run: async ({ ctx, m }) => {
     let evalCmd;
     try {
       evalCmd = /await/i.test(m.text)
