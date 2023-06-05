@@ -11,9 +11,7 @@ export default {
       .url("Facebook", "https://www.facebook.com/khunbotme").row()
       .text("Callback button", "oke")
 
-    m.reply("INI MENU BUTTON", { reply_markup: inlineKeyboard })
-
-    ctx.api.sendMessage(m.chatid, "Ini button", {
+    return await ctx.api.sendMessage(m.chatid, "INI MENU BUTTON", {
       reply_markup: inlineKeyboard,
     });
   },
