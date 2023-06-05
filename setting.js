@@ -2,6 +2,8 @@ import func from "./system/lib/func.js";
 import grammy from "grammy";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
+import { spawn } from 'node:child_process'
+import { exec } from 'node:child_process'
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 
@@ -9,6 +11,8 @@ global.reloadFile = (file) => reloadFile(file);
 
 global.npm = {
   grammy: grammy,
+  exec: exec, 
+  spawn: spawn, 
 };
 
 global.set = {
