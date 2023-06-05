@@ -1,4 +1,6 @@
 import "../../setting.js";
+import config from "../../config.js";
+
 import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
@@ -14,17 +16,15 @@ const aliases = new Collection();
 
 const Message = async (ctx, m) => {
   try {
-    // const filePath = path.join(__dirname, "../../", "db.json");
-    // let getDB = JSON.parse(fs.readFileSync(filePath));
-    let getDB = require("../../config.json");
-    if (!getDB.settings.public && !m.isOwner) return;
+    if (!config.options.public && !m.isOwner) return;
     if (!m) return;
     if (m.isBot) return;
 
-    const prefix = (m.prefix =
-      /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@\/#%^&.©^😁🥴😶]/gi.test(m.body)
-        ? m.body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@\/#%^&.©^😁🥴😶]/gi)[0]
-        : "");
+    const prefix = (m.prefix = /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@\/#%^&.©^]/gi.test(
+      m.body
+    )
+      ? m.body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@\/#%^&.©^]/gi)[0]
+      : "");
     const cmd = (m.cmd =
       m.body &&
       m.body.slice(prefix.length).trim().split(/ +/).shift().toLowerCase());
@@ -64,6 +64,7 @@ const Message = async (ctx, m) => {
         .run({
           ctx,
           m,
+          config,
         })
         ?.then((a) => a)
         ?.catch((error) => console.log(error));
@@ -75,6 +76,7 @@ const Message = async (ctx, m) => {
         .run({
           ctx,
           m,
+          config,
         })
         ?.then((a) => a)
         ?.catch((error) => console.log(error));

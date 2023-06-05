@@ -49,7 +49,6 @@ export const serialize = async (ctx, m) => {
       m.sender = m.fromid;
       m.isOwner = m.sender && [...set.owner].includes(m.sender);
     }
-    // console.log(m);
   }
 
   m.reply = (text, options = {}) => {
@@ -58,8 +57,6 @@ export const serialize = async (ctx, m) => {
       ...options,
     });
   };
-
-  // console.log(m);
 
   return m;
 };

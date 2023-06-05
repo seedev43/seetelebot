@@ -320,59 +320,6 @@ export default new (class func {
       rating: bestMatch.rating,
     };
   }
-
-  readJSONFile(filename) {
-    const filePath = path.join(__dirname, "..", "..", filename);
-    if (fs.existsSync(filePath)) {
-      try {
-        const fileContent = fs.readFileSync(filePath, "utf8");
-        const jsonData = JSON.parse(fileContent);
-        console.log(`Sukes membaca file JSON`);
-        return jsonData;
-      } catch (err) {
-        console.error(`Gagal membaca file JSON '${filename}':`, err);
-        return null;
-      }
-    } else {
-      console.log(`File '${filename}' tidak ditemukan.`);
-      return null;
-    }
-  }
-
-  editJSONFile(filename, keyPath, newValue) {
-    const filePath = path.join(__dirname, "..", "..", filename);
-    if (fs.existsSync(filePath)) {
-      try {
-        const fileContent = fs.readFileSync(filePath, "utf8");
-        const jsonData = JSON.parse(fileContent);
-        const keys = keyPath.split(".");
-
-        let currentObj = jsonData;
-        for (let i = 0; i < keys.length - 1; i++) {
-          const key = keys[i];
-          if (typeof currentObj[key] !== "object") {
-            reject(new Error(`Invalid key path: ${keyPath}`));
-            return;
-          }
-          currentObj = currentObj[key];
-        }
-
-        const lastKey = keys[keys.length - 1];
-        currentObj[lastKey] = newValue;
-
-        const updatedContent = JSON.stringify(jsonData, null, 2);
-        fs.writeFileSync(filePath, updatedContent, "utf8");
-
-        console.log(
-          `Nilai '${keyPath}' dalam file JSON '${filename}' berhasil diubah.`
-        );
-      } catch (err) {
-        console.error(`Gagal mengedit file JSON '${filename}':`, err);
-      }
-    } else {
-      console.log(`File '${filename}' tidak ditemukan.`);
-    }
-  }
 })();
 
 let fileP = fileURLToPath(import.meta.url);

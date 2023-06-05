@@ -22,20 +22,17 @@ process.on("uncaughtException", console.error);
 process.on("unhandledRejection", console.error);
 readCommands();
 
-global.set.func.readJSONFile("config.json");
-
 bot.on("callback_query", async (update) => {
   await answerCallbackQuery(bot, update);
 });
 
 bot.on("message", async (update) => {
   const m = await serialize(bot, update);
-  await Message(bot, m, update);
+  await Message(bot, m);
 });
 
-
 bot.start({
-  drop_pending_updates: true
+  drop_pending_updates: true,
 });
 
 //untuk method webhook
