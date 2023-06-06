@@ -7,7 +7,7 @@ export default {
   desc: "buat button",
   run: async ({ ctx, m }) => {
     const inlineKeyboard = new InlineKeyboard()
-      .url("Github", "https://github.com/seedev4")
+      .url("Github", "https://github.com/seedev43")
       .url("Facebook", "https://www.facebook.com/khunbotme").row()
       .text("Callback button", "oke")
 
