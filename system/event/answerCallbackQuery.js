@@ -1,6 +1,6 @@
 import { InlineKeyboard } from "grammy";
 
-export const answerCallbackQuery = async ({ctx: bot}, m) => {
+export const answerCallbackQuery = async (bot, m) => {
   if (m.update?.callback_query) {
     m.cb = m.update?.callback_query;
     m.cbdata = m.cb.data;
