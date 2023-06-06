@@ -7,6 +7,9 @@ export const answerCallbackQuery = async ({ctx: bot}, m) => {
     m.msgid = m.cb.message.message_id;
     m.chatid = m.cb.message.chat.id;
 
+    bot.callbackQuery("oke", async(c) => {
+      console.log(c);
+    })
     if (m.cbdata == "oke") {
       bot.api.editMessageText(m.chatid, m.msgid, "edit pesan button", {
         reply_markup: new InlineKeyboard()
