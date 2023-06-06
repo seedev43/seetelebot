@@ -11,7 +11,7 @@ export const answerCallbackQuery = async (ctx, m) => {
       ctx.api.editMessageText(m.chatid, m.msgid, "edit pesan button", {
         reply_markup: new InlineKeyboard()
           .text("Button 1", "btn1")
-          .text("Button 2", "btn2")
+          .text("Button 2", "btn2").row()
           .text("Button 3", "btn3")
       });
     }
