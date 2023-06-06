@@ -14,6 +14,13 @@ export const answerCallbackQuery = async (ctx, m) => {
           .text("Button 2", "btn2").row()
           .text("Button 3", "btn3")
       });
+    } else if(m.cbdata == "btn1") {
+      ctx.api.editMessageText(m.chatid, m.msgid, "Button 1 di klik", {
+        reply_markup: new InlineKeyboard()
+          .text("Button 2", "btn2")
+          .text("Button 3", "btn3").row()
+          .text("Kembali", "oke")
+      })
     }
   }
   return m;
